@@ -1,5 +1,4 @@
 import torch
-from torchvision import models
 import matplotlib.pyplot as plt
 import numpy as np
 import os
@@ -14,19 +13,6 @@ def save(model, name):
     torch.save(model_save, 'saved_models/' + name + '.pth')
 
 
-def load(name):
-    model_save = torch.load('saved_models/' + name)
-    model = models.resnet50(pretrained=True)
-    for param in model.parameters():
-        param.requires_grad = False
-    model.fc = model_save['fc']
-    model.load_state_dict(model_save['state_dict'])
-    model.class_to_idx = model_save['class_to_index']
-    model.idx_to_class = model_save['index_to_class']
-    model.cuda()
-    return model
-
-
 def show_image(image, image_path, ax=None):
     if ax is None:
         fig, ax = plt.subplots()
@@ -35,7 +21,7 @@ def show_image(image, image_path, ax=None):
     std = np.array([0.229, 0.224, 0.225])
     image = std * image + mean
     image = np.clip(image, 0, 1)
-    title = image_path.split('/')[2]
+    title = image_path.split('/')[4]
     ax.imshow(image)
     ax.set_title(title)
     ax.axis('off')
@@ -43,7 +29,7 @@ def show_image(image, image_path, ax=None):
 
 
 def random_image():
-    test_data_path = 'source/dataset/test/'
+    test_data_path = 'source/data/Dataset/test/'
     category = random.choice(os.listdir(test_data_path))
     rand_image = random.choice(os.listdir(test_data_path + str(category) + '/'))
     img_path = test_data_path + str(category) + '/' + rand_image

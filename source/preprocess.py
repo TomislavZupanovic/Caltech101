@@ -26,10 +26,10 @@ def process_data(directory):
     valid_dataset = datasets.ImageFolder(valid_dir, transform=valid_transformation)
     test_dataset = datasets.ImageFolder(test_dir, transform=test_transformation)
 
-    train_data = torch.utils.data.DataLoader(train_dataset, batch_size=32, shuffle=True)
-    valid_data = torch.utils.data.DataLoader(valid_dataset, batch_size=32, shuffle=True)
+    train_data = torch.utils.data.DataLoader(train_dataset, batch_size=64, shuffle=True)
+    valid_data = torch.utils.data.DataLoader(valid_dataset, batch_size=64, shuffle=True)
     test_data = torch.utils.data.DataLoader(test_dataset, batch_size=32, shuffle=True)
-    return train_data, valid_data, test_data
+    return train_data, valid_data, test_data, train_dataset
 
 
 def process_image(image_path):
@@ -45,7 +45,7 @@ def process_image(image_path):
     upper_margin = (img.size[1] - 224) / 2
     lower_margin = upper_margin + 224
     img = img.crop((left_margin, upper_margin, right_margin, lower_margin))
-    img = np.array(img).transpose((2, 0, 1)) / 256.0
+    img = np.array(img).transpose((2, 0, 1)) / 255.0
     mean = np.array([0.485, 0.456, 0.406]).reshape((3, 1, 1))
     std = np.array([0.229, 0.224, 0.225]).reshape((3, 1, 1))
     img = (img - mean) / std
