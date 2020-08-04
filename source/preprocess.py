@@ -21,7 +21,7 @@ def process_data(directory):
                                                transforms.Normalize([0.485, 0.456, 0.406],
                                                                     [0.229, 0.224, 0.225])])
 
-    test_transformation = valid_transformation  # same transformations
+    test_transformation = valid_transformation
     train_dataset = datasets.ImageFolder(train_dir, transform=train_transformation)
     valid_dataset = datasets.ImageFolder(valid_dir, transform=valid_transformation)
     test_dataset = datasets.ImageFolder(test_dir, transform=test_transformation)
