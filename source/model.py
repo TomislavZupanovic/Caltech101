@@ -24,7 +24,7 @@ class Model(object):
         self.model.fc = fc_layers
         if criterion == 'NLLLoss':
             self.criterion = nn.NLLLoss()
-        elif criterion == 'CES':
+        elif criterion == 'CEL':
             self.criterion = nn.CrossEntropyLoss()
         self.optimizer = optim.Adam(self.model.fc.parameters(), lr=self.lr)
         self.model.class_to_idx = train_dataset.class_to_idx
