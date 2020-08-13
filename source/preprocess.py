@@ -1,6 +1,5 @@
 import torch
 from torchvision import transforms, datasets
-from PIL import Image
 import numpy as np
 
 
@@ -32,8 +31,7 @@ def process_data(directory):
     return train_data, valid_data, test_data, train_dataset
 
 
-def process_image(image_path):
-    img = Image.open(image_path)
+def process_image(img):
     width = img.size[0]
     height = img.size[1]
     if width > height:
