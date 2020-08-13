@@ -5,7 +5,7 @@ Saved model can be used for predicting as:
 - UI interface using [Gradio](https://www.gradio.app/)  
   
 `$ python predict.py --usage gradio`  
-  <img src="https://github.com/TomislavZupanovic/Caltech101/blob/master/notebooks/Gradio.jpg" width="500" height="250">  
+  <img src="https://github.com/TomislavZupanovic/Caltech101/blob/master/notebooks/Gradio.jpg" width="700" height="400">  
 - Random image from test dataset  
   
 `$ python predict.py --usage random`  
