@@ -9,4 +9,4 @@ Saved model can be used for predicting as:
 - Random image from test dataset  
   
 `$ python predict.py --usage random`  
-<img src="https://github.com/TomislavZupanovic/Caltech101/blob/master/notebooks/Random_image.jpeg" width="700" height="300">  
+<img src="https://github.com/TomislavZupanovic/Caltech101/blob/master/notebooks/Random_image.jpeg" width="680" height="280">  
