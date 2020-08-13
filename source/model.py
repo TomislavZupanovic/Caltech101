@@ -2,6 +2,7 @@ import torch
 from torchvision import models
 from torch import nn, optim
 from .utils import save, show_image
+from PIL import Image
 import pandas as pd
 from .preprocess import process_image
 import matplotlib.pyplot as plt
@@ -104,13 +105,17 @@ class Model(object):
                     accuracy = torch.mean(correct.type(torch.FloatTensor))
                     test_acc += accuracy.item() * images.size(0)
                 test_acc = test_acc / len(test_data.dataset)
-                print('Iteration {}/{}'.format(i + 1, iterations))
+                print('\nIteration {}/{}'.format(i + 1, iterations))
                 print('Test accuracy: {:.1f}%'.format(test_acc * 100))
         self.model.train()
 
-    def predict(self, image_path, topk=5):
+    def predict(self, image_path, plot_pred=False, topk=5):
         self.model.eval()
-        image = process_image(image_path)
+        if plot_pred:
+            image = Image.open(image_path)
+            image = process_image(image)
+        else:
+            image = process_image(image_path)
         image = image.view(1, 3, 224, 224).cuda()
         with torch.no_grad():
             probability = torch.exp(self.model(image))
@@ -118,18 +123,20 @@ class Model(object):
             classes = [self.model.idx_to_class[class_] for class_ in top_class.cpu().numpy()[0]]
             top_prob = top_prob.cpu().numpy()[0]
         image = image.cpu().squeeze()
-        plt.figure(figsize=(10, 4))
-        ax = plt.subplot(1, 2, 1)
-        ax, img = show_image(image, image_path, ax=ax)
-        ax.axis('off')
-        ax1 = plt.subplot(1, 2, 2)
-        y = np.arange(topk)
-        ax1.set_yticks(y)
-        ax1.set_yticklabels(classes)
-        ax1.set_xlabel('Probability')
-        ax1.invert_yaxis()
-        ax1.barh(y, top_prob)
-        plt.tight_layout()
-        plt.show()
+        if plot_pred:
+            plt.figure(figsize=(10, 4))
+            ax = plt.subplot(1, 2, 1)
+            ax, img = show_image(image, image_path, ax=ax)
+            ax.axis('off')
+            ax1 = plt.subplot(1, 2, 2)
+            y = np.arange(topk)
+            ax1.set_yticks(y)
+            ax1.set_yticklabels(classes)
+            ax1.set_xlabel('Probability')
+            ax1.invert_yaxis()
+            ax1.barh(y, top_prob)
+            plt.tight_layout()
+            plt.show()
+        return classes, top_prob
 
 
