@@ -1,7 +1,10 @@
 # Caltech101
 Just my take with Transfer Learning on [Caltech101](https://en.wikipedia.org/wiki/Caltech_101) dataset using ResNet-50 Convolutional Neural Network.
 
-Saved model can be used for predicting as:  
+Simple web application:
+- [Recognition-App](https://recognition-caltech.herokuapp.com/)
+
+Saved model can be used locally for predicting as:  
 - UI using [Gradio](https://www.gradio.app/)  
   
 `$ python predict.py --usage gradio`  
